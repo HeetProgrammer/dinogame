@@ -20,6 +20,7 @@ class DinoRunner:
         self.player = Dinosaur(self)
         self.cactii = pygame.sprite.Group()
         self.sb = Scoreboard(self)
+        self.last = 0
         self.new_game()
         
 
@@ -35,7 +36,8 @@ class DinoRunner:
         for i in range(n):
             cactus = Cactus(self)
             cactus.rect.bottom = self.screen_rect.bottom - 100
-            cactus.rect.left = self.screen_rect.right + random.randint(300, 500) * i
+            cactus.rect.left = self.screen_rect.right + \
+            random.randint(self.settings.difficulty_limit[0], self.settings.difficulty_limit[1]) * i
             self.cactii.add(cactus)
 
     def update_cactii(self):
@@ -58,8 +60,15 @@ class DinoRunner:
                 self.cactii.remove(cactus)
                 self.draw_cactii(1)
     
+    def increase_difficulty(self):
+        if self.score - self.last >= 5000:
+            self.settings.difficulty_limit = (100, 200)
+            self.settings.cactus_speed += 2
+            self.last = self.score
+    
     def new_game(self):
         """ Starts new game"""
+        self.settings.reset_dynamic_settings()
         self.cactii.empty()
         self.draw_cactii(2)
         self.framenum = 0
@@ -94,6 +103,7 @@ class DinoRunner:
             self.framenum += 1
             self.score += 10
             self.sb.prep_score(self.score)
+            self.increase_difficulty()
             self.check_events()
             self.update_screen()
 
