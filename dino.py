@@ -43,9 +43,11 @@ class DinoRunner:
         self.check_cactus_dino_collisions()
     
     def check_cactus_dino_collisions(self):
-        if pygame.sprite.spritecollideany(self.player, self.cactii):
-            sleep(0.5)
-            self.new_game()
+        for cactus in self.cactii.sprites():
+            if cactus.rect.collidepoint(self.player.rect.center) \
+             or cactus.rect.collidepoint(self.player.rect.midbottom):
+                sleep(0.5)
+                self.new_game()
 
     def check_cactus_edges(self):
         """ Checks if cactus is off the screen and draws new one"""
