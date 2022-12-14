@@ -5,6 +5,7 @@ from settings import Settings
 from cactus import Cactus
 from time import sleep
 import random
+from scoreboard import Scoreboard
 
 
 class DinoRunner:
@@ -18,6 +19,7 @@ class DinoRunner:
         self.is_gravity = True
         self.player = Dinosaur(self)
         self.cactii = pygame.sprite.Group()
+        self.sb = Scoreboard(self)
         self.new_game()
         
 
@@ -61,6 +63,8 @@ class DinoRunner:
         self.cactii.empty()
         self.draw_cactii(2)
         self.framenum = 0
+        self.score = 0
+        self.sb.prep_score(self.score)
         self.player.position_dino(self.framenum)
         self.is_gravity = True
 
@@ -87,7 +91,9 @@ class DinoRunner:
         while True:
             self.check_in_air()
             self.update_cactii()
-            self.framenum += 1 % len(self.player.frame_group)
+            self.framenum += 1
+            self.score += 10
+            self.sb.prep_score(self.score)
             self.check_events()
             self.update_screen()
 
@@ -107,6 +113,7 @@ class DinoRunner:
         self.player.draw_dino()
         for cactus in self.cactii:
             cactus.draw_image()
+        self.sb.draw_score()
         pygame.display.flip()
 
 
