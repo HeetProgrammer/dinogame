@@ -11,6 +11,7 @@ from scoreboard import Scoreboard
 class DinoRunner:
     def __init__(self):
         """ Initializes global game attributes"""
+        pygame.init()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.screen_rect = self.screen.get_rect()
@@ -22,7 +23,6 @@ class DinoRunner:
         self.sb = Scoreboard(self)
         self.last = 0
         self.new_game()
-        
 
     def check_events(self):
         """ Contains an event loop that responds to user events"""
@@ -37,7 +37,7 @@ class DinoRunner:
             cactus = Cactus(self)
             cactus.rect.bottom = self.screen_rect.bottom - 100
             cactus.rect.left = self.screen_rect.right + \
-            random.randint(self.settings.difficulty_limit[0], self.settings.difficulty_limit[1]) * i
+                random.randint(self.settings.difficulty_limit[0], self.settings.difficulty_limit[1]) * i
             self.cactii.add(cactus)
 
     def update_cactii(self):
@@ -50,7 +50,9 @@ class DinoRunner:
         for cactus in self.cactii.sprites():
             if cactus.rect.collidepoint(self.player.rect.center) \
              or cactus.rect.collidepoint(self.player.rect.midbottom):
-                sleep(0.5)
+                pygame.mixer.music.load('death.mp3')
+                pygame.mixer.music.play()
+                sleep(3)
                 self.new_game()
 
     def check_cactus_edges(self):
@@ -62,7 +64,8 @@ class DinoRunner:
     
     def increase_difficulty(self):
         if self.score - self.last >= 5000:
-            self.settings.difficulty_limit = (100, 200)
+            self.settings.difficulty_limit[0] -= 100
+            self.settings.difficulty_limit[1] -= 50
             self.settings.cactus_speed += 2
             self.last = self.score
     
@@ -77,7 +80,6 @@ class DinoRunner:
         self.player.position_dino(self.framenum)
         self.is_gravity = True
 
-
     def check_keydown_events(self, event):
         """ Checks keypress events"""
         if event.key == pygame.K_q:
@@ -85,6 +87,8 @@ class DinoRunner:
         elif event.key == pygame.K_SPACE:
             if self.player.bottom == self.screen_rect.bottom - 100:
                 self.player.bottom += self.settings.jump_speed
+                pygame.mixer.music.load('jump.mp3')
+                pygame.mixer.music.play()
 
     def check_in_air(self):
         """ Checks if dinosaur is in air"""
