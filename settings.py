@@ -8,6 +8,6 @@ class Settings:
            
     def reset_dynamic_settings(self):
         self.cactus_speed = 10
-        self.difficulty_limit = (300, 500)
+        self.difficulty_limit = [300, 500]
 
 

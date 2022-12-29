@@ -71,7 +71,7 @@ class DinoRunner:
     
     def new_game(self):
         """ Starts new game"""
-        self.settings.reset_dynamic_settings()
+        self.settings.reset_dynamic_settings() 
         self.cactii.empty()
         self.draw_cactii(2)
         self.framenum = 0
