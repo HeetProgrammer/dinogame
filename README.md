@@ -20,17 +20,12 @@ Jump over cactii, survive as long as possible, and try to beat your high score!
    git clone https://github.com/HeetProgrammer/dino-runner.git
    cd dino-runner
     ```
-2. Create a virtual environment:
-  ```
-  python -m venv venv
-  source venv/bin/activate   # On Linux/Mac
-  venv\Scripts\activate      # On Windows
-  ```
-3. Install dependencies:
+
+2. Install dependencies:
    ```
    pip install -r requirements.txt
    ```
-4. Run the game:
+3. Run the game:
    ```
    python dino.py
    ```
