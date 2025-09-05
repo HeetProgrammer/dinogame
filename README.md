@@ -17,7 +17,7 @@ Jump over cactii, survive as long as possible, and try to beat your high score!
 1. Clone this repository:
    bash
    ```
-   git clone https://github.com/your-username/dino-runner.git
+   git clone https://github.com/HeetProgrammer/dino-runner.git
    cd dino-runner
     ```
 2. Create a virtual environment:
